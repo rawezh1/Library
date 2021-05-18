@@ -11,8 +11,19 @@ function addBook(title, author, pages, read) {
 };
 function addNewBook (){
     let btn = document.createElement("button")
+    let btnContainer = document.createElement("div")
+
     btn.innerHTML = "Add new book"
-    document.body.appendChild(btn)
+    btn.addEventListener("click", function(){
+        let title = prompt("Enter the title of the book")
+        let author = prompt("Enter the name of the author")
+        let pages = prompt("Enter the number of pages")
+        let read = prompt("Have you read the book? Enter true or false")
+        addBook(title,author,pages,read)
+        showBooks()
+    })
+    btnContainer.appendChild(btn)
+    document.body.appendChild(btnContainer)
 }
 function showBooks (){
     let tableContainer = document.getElementById("tableContainer")
@@ -47,6 +58,11 @@ function showBooks (){
     bookContainer.appendChild(bookList)
     document.body.appendChild(bookContainer)
 }
-
 addBook("Abook","aauthor",267,false);
 addBook("Bbook","bauthor",264,false);
+
+window.onload = function() {
+    
+    addNewBook();
+}
+
