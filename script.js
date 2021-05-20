@@ -1,4 +1,4 @@
-let myLibrary = [];
+myLibrary = [];
 function Book(title, author, pages, read) {
     this.title = title
     this.author = author
@@ -26,7 +26,8 @@ function addNewBook (){
     document.body.appendChild(btnContainer)
 }
 function showBooks (){
-    let tableContainer = document.getElementById("tableContainer")
+    let tableContainer = document.getElementById("tableContainer");
+    tableContainer.innerHTML = "";
     let myTable = document.createElement("TABLE");
     tableContainer.appendChild(myTable)
     let header = myTable.createTHead();
@@ -48,15 +49,50 @@ function showBooks (){
         let author = row.insertCell()
         let pages = row.insertCell()
         let read = row.insertCell()
+        let deleteBook = row.insertCell()
+        let changeRead = row.insertCell()
         title.innerHTML = myLibrary[i].title
         author.innerHTML = myLibrary[i].author
         pages.innerHTML = myLibrary[i].pages
+        let btn = createButton(i)
+        addRemoveEvent(btn)
+        btn.innerHTML = "Delete"
+        let readBtn = createButton(i)
+        addReadEvent(readBtn)
+        readBtn.innerHTML = "Read"
+        changeRead.appendChild(readBtn)
+        deleteBook.appendChild(btn)
         if (myLibrary[i].read) {read.innerHTML = "Yes"}
         else { read.innerHTML = "No"}
 
     };
     bookContainer.appendChild(bookList)
     document.body.appendChild(bookContainer)
+}
+function addRemoveEvent(button){
+    button.addEventListener('click',function (){
+        removeBook(button.id)
+        showBooks()
+    })
+
+}
+function removeBook(index){
+      myLibrary.splice(index,1)
+}
+function createButton(index) {
+    btn = document.createElement("button")
+        btn.setAttribute("id",i)
+    return btn
+}
+function addReadEvent(button){
+    button.addEventListener('click',function (){
+        changeRead(button.id)
+        showBooks()
+    })
+}
+function changeRead(index) {
+    if (myLibrary[index].read) { myLibrary[index].read = false}
+    else {myLibrary[index].read = true}
 }
 addBook("Abook","aauthor",267,false);
 addBook("Bbook","bauthor",264,false);
@@ -65,4 +101,3 @@ window.onload = function() {
     
     addNewBook();
 }
-
